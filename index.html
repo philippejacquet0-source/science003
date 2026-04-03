@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Americanus Rex</title>
+  <meta name="description" content="Americanus Rex — a fictional retro-futuristic reactor concept presented as a bold technology showcase." />
+  <style>
+    :root {
+      --bg: #07111f;
+      --panel: rgba(12, 23, 41, 0.82);
+      --panel-strong: rgba(18, 31, 55, 0.96);
+      --text: #eef4ff;
+      --muted: #b0c0dd;
+      --line: rgba(150, 184, 255, 0.18);
+      --accent: #77a7ff;
+      --accent-2: #ff7b47;
+      --accent-3: #8be9b8;
+      --shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+      --radius: 22px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 20% 0%, rgba(119, 167, 255, 0.18), transparent 28%),
+        radial-gradient(circle at 80% 0%, rgba(255, 123, 71, 0.16), transparent 26%),
+        linear-gradient(180deg, #09111f 0%, #07101d 45%, #050b14 100%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 36px 36px;
+      mask-image: linear-gradient(180deg, rgba(255,255,255,.55), transparent 92%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    .container {
+      width: min(calc(100% - 32px), var(--max));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      backdrop-filter: blur(14px);
+      background: rgba(4, 9, 17, 0.7);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .topbar-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      padding: 14px 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .brand-mark {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background:
+        linear-gradient(135deg, rgba(119, 167, 255, 0.95), rgba(255, 123, 71, 0.92));
+      box-shadow: inset 0 0 18px rgba(255,255,255,0.25), 0 10px 24px rgba(0,0,0,0.3);
+      display: grid;
+      place-items: center;
+      font-size: 0.85rem;
+      color: white;
+    }
+
+    .nav {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .nav a:hover { color: var(--text); }
+
+    .hero {
+      padding: 76px 0 42px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border: 1px solid rgba(139, 233, 184, 0.2);
+      border-radius: 999px;
+      background: rgba(139, 233, 184, 0.08);
+      color: var(--accent-3);
+      font-size: 0.85rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 18px 0 14px;
+      font-size: clamp(2.6rem, 7vw, 5.4rem);
+      line-height: 0.94;
+      letter-spacing: -0.04em;
+    }
+
+    .lead {
+      max-width: 58ch;
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.75;
+      margin: 0 0 24px;
+    }
+
+    .cta-row {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin: 28px 0 22px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 18px;
+      border-radius: 14px;
+      font-weight: 700;
+      transition: transform 0.18s ease, background 0.18s ease, border 0.18s ease;
+      border: 1px solid transparent;
+    }
+
+    .button:hover { transform: translateY(-1px); }
+
+    .button.primary {
+      background: linear-gradient(135deg, var(--accent), #5a8dff);
+      color: white;
+      box-shadow: 0 14px 36px rgba(80, 129, 255, 0.34);
+    }
+
+    .button.secondary {
+      background: rgba(255,255,255,0.04);
+      border-color: rgba(255,255,255,0.1);
+      color: var(--text);
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .stat {
+      background: rgba(255,255,255,0.035);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.6rem;
+      letter-spacing: -0.03em;
+      margin-bottom: 4px;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.45;
+    }
+
+    .hero-card,
+    .panel,
+    .gallery-card,
+    .feature-card,
+    .spec-card,
+    .logo-card,
+    .footer-panel {
+      background: var(--panel);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-card {
+      padding: 18px;
+      position: relative;
+      overflow: hidden;
+      min-height: 560px;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(119, 167, 255, 0.14), transparent 30%),
+        radial-gradient(circle at 85% 15%, rgba(255, 123, 71, 0.12), transparent 30%),
+        linear-gradient(180deg, rgba(16, 26, 46, 0.95), rgba(8, 16, 30, 0.95));
+    }
+
+    .hero-card::after {
+      content: "Concept Showcase";
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .reactor-visual {
+      position: relative;
+      height: 100%;
+      min-height: 520px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      isolation: isolate;
+    }
+
+    .glow {
+      position: absolute;
+      inset: auto;
+      width: 72%;
+      height: 72%;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(119, 167, 255, 0.16), transparent 60%);
+      filter: blur(24px);
+      z-index: -2;
+    }
+
+    .engine {
+      width: min(95%, 560px);
+      aspect-ratio: 10 / 5.5;
+      position: relative;
+      border-radius: 999px;
+      background: linear-gradient(180deg, #b9c7dc, #73839e 26%, #4b5b74 58%, #243246 100%);
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.16), inset 0 18px 30px rgba(255,255,255,0.18), 0 26px 50px rgba(0,0,0,0.35);
+      overflow: hidden;
+      transform: perspective(1400px) rotateX(7deg) rotateY(-8deg);
+    }
+
+    .engine::before {
+      content: "";
+      position: absolute;
+      inset: 10% 7%;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .intake {
+      position: absolute;
+      left: 1.5%;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 27%;
+      aspect-ratio: 1 / 1;
+      border-radius: 50%;
+      background: radial-gradient(circle at 45% 45%, #1a2433 0 14%, #32445c 14% 20%, #09101b 21% 60%, #8da0bf 61% 66%, rgba(255,255,255,0) 67%);
+      box-shadow: inset 0 0 28px rgba(0,0,0,0.55);
+    }
+
+    .fan {
+      position: absolute;
+      inset: 20%;
+      border-radius: 50%;
+      background: repeating-conic-gradient(from 0deg, #b8c7dd 0deg 10deg, #3a4b64 10deg 20deg);
+      mask: radial-gradient(circle, transparent 0 20%, #000 22% 100%);
+      opacity: 0.9;
+    }
+
+    .core {
+      position: absolute;
+      left: 31%;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 28%;
+      height: 40%;
+      border-radius: 999px;
+      background: linear-gradient(180deg, #ffdc8f, #ff9d48 42%, #ff5d2a 80%, #b72d0d 100%);
+      box-shadow: 0 0 22px rgba(255, 123, 71, 0.75), inset 0 0 18px rgba(255,255,255,0.25);
+    }
+
+    .core::before {
+      content: "";
+      position: absolute;
+      inset: 16% 10%;
+      border-radius: 999px;
+      border: 2px dashed rgba(255,255,255,0.35);
+    }
+
+    .pipes,
+    .rods,
+    .shaft,
+    .flame {
+      position: absolute;
+    }
+
+    .shaft {
+      left: 24%;
+      right: 8%;
+      top: 46%;
+      height: 8%;
+      border-radius: 999px;
+      background: linear-gradient(180deg, #8899b1, #495a73);
+      box-shadow: inset 0 1px 6px rgba(255,255,255,0.22);
+    }
+
+    .turbine-stage {
+      position: absolute;
+      right: 12%;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 17%;
+      height: 52%;
+      border-radius: 22px;
+      background: repeating-linear-gradient(90deg, #7789a5 0 8%, #495a72 8% 16%, #2c3a4f 16% 21%);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1);
+    }
+
+    .pipes {
+      inset: 0;
+    }
+
+    .pipe {
+      position: absolute;
+      border: 6px solid #6baeff;
+      border-radius: 999px;
+      opacity: 0.9;
+      filter: drop-shadow(0 0 10px rgba(70, 142, 255, 0.34));
+    }
+
+    .pipe.one {
+      width: 28%;
+      height: 52%;
+      right: 16%;
+      top: 12%;
+      border-left-color: transparent;
+      border-bottom-color: transparent;
+      transform: rotate(8deg);
+    }
+
+    .pipe.two {
+      width: 28%;
+      height: 54%;
+      left: 22%;
+      bottom: 10%;
+      border-right-color: transparent;
+      border-top-color: transparent;
+      transform: rotate(-7deg);
+    }
+
+    .rods {
+      left: 41%;
+      top: 14%;
+      width: 16%;
+      height: 44%;
+      display: flex;
+      gap: 6%;
+      justify-content: center;
+    }
+
+    .rods span {
+      width: 14%;
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(180deg, #dce6f6, #8292aa 40%, #53627c 100%);
+      box-shadow: inset 0 0 10px rgba(255,255,255,0.24);
+    }
+
+    .flame {
+      right: -3%;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18%;
+      height: 42%;
+      background: radial-gradient(circle at 15% 50%, #fff8ca 0 15%, #ffbb66 15% 35%, #ff6e2c 35% 62%, rgba(255,110,44,0) 72%);
+      filter: blur(2px);
+      clip-path: polygon(0 50%, 25% 18%, 58% 0, 88% 18%, 100% 50%, 88% 82%, 58% 100%, 25% 82%);
+      opacity: 0.9;
+    }
+
+    .callout {
+      position: absolute;
+      font-size: 0.78rem;
+      padding: 8px 10px;
+      border-radius: 12px;
+      background: rgba(8, 14, 24, 0.84);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--text);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+    }
+
+    .callout small { display: block; color: var(--muted); margin-top: 4px; }
+    .callout.a { left: 4%; top: 13%; }
+    .callout.b { left: 55%; top: 8%; }
+    .callout.c { right: 1%; bottom: 16%; }
+
+    section {
+      padding: 30px 0;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: clamp(1.7rem, 3vw, 2.5rem);
+      letter-spacing: -0.04em;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 62ch;
+      line-height: 1.7;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 18px;
+    }
+
+    .feature-card,
+    .spec-card,
+    .gallery-card,
+    .logo-card,
+    .panel,
+    .footer-panel {
+      padding: 22px;
+    }
+
+    .feature-card h3,
+    .spec-card h3,
+    .gallery-card h3,
+    .logo-card h3 {
+      margin: 0 0 10px;
+      font-size: 1.12rem;
+      letter-spacing: -0.02em;
+    }
+
+    .feature-card p,
+    .spec-card p,
+    .gallery-card p,
+    .logo-card p,
+    .panel p,
+    .footer-panel p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .feature-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 14px;
+      background: linear-gradient(135deg, rgba(119, 167, 255, 0.18), rgba(255, 123, 71, 0.18));
+      border: 1px solid rgba(255,255,255,0.08);
+      font-size: 1.1rem;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 18px;
+    }
+
+    .gallery-stack {
+      display: grid;
+      gap: 18px;
+    }
+
+    .art-frame {
+      aspect-ratio: 16 / 10;
+      border-radius: 18px;
+      overflow: hidden;
+      position: relative;
+      background:
+        linear-gradient(135deg, rgba(119, 167, 255, 0.12), rgba(255, 123, 71, 0.16)),
+        linear-gradient(180deg, #101b2e, #09111d);
+      border: 1px solid rgba(255,255,255,0.08);
+      display: grid;
+      place-items: center;
+    }
+
+    .art-frame::before {
+      content: "";
+      position: absolute;
+      inset: 18px;
+      border-radius: 14px;
+      border: 1px dashed rgba(255,255,255,0.15);
+    }
+
+    .art-label {
+      position: absolute;
+      left: 16px;
+      bottom: 14px;
+      padding: 8px 10px;
+      border-radius: 12px;
+      background: rgba(5, 9, 16, 0.76);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--text);
+      font-size: 0.82rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .wireframe-svg,
+    .logo-svg,
+    .cutaway-svg {
+      width: 88%;
+      height: auto;
+    }
+
+    .spec-grid {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .spec-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 6px;
+    }
+
+    .spec-row {
+      display: grid;
+      grid-template-columns: 170px 1fr;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .spec-row strong {
+      color: var(--text);
+      font-size: 0.95rem;
+    }
+
+    .spec-row span {
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 0.96rem;
+    }
+
+    .quote {
+      margin-top: 16px;
+      padding: 18px;
+      border-left: 3px solid var(--accent-2);
+      background: rgba(255,255,255,0.025);
+      border-radius: 0 16px 16px 0;
+      color: var(--text);
+      line-height: 1.8;
+      font-style: italic;
+    }
+
+    .logo-layout {
+      display: grid;
+      grid-template-columns: 0.82fr 1.18fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .footer {
+      padding: 30px 0 60px;
+    }
+
+    .footer-panel {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: center;
+      flex-wrap: wrap;
+      background: var(--panel-strong);
+    }
+
+    .footer-note {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.04);
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .gallery-grid,
+      .spec-grid,
+      .logo-layout,
+      .grid-3 {
+        grid-template-columns: 1fr;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-card {
+        min-height: 460px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .topbar-inner {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .hero { padding-top: 54px; }
+
+      h1 { font-size: clamp(2.2rem, 13vw, 3.6rem); }
+
+      .spec-row {
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
+
+      .callout {
+        position: static;
+        margin-top: 10px;
+      }
+
+      .reactor-visual {
+        padding-top: 10px;
+        align-content: start;
+        min-height: auto;
+      }
+
+      .engine {
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a href="#home" class="brand" aria-label="Americanus Rex Home">
+        <span class="brand-mark">AR</span>
+        <span>Americanus Rex</span>
+      </a>
+      <nav class="nav">
+        <a href="#concept">Concept</a>
+        <a href="#gallery">Visuals</a>
+        <a href="#specs">Specs</a>
+        <a href="#brand">Brand</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="home">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">Fictional concept · retro-futurist showcase</div>
+          <h1>Americanus<br>Rex</h1>
+          <p class="lead">
+            A bold concept page for a wildly ambitious reactor-in-turbine idea, presented as a premium technology brand. This landing page is built as a single self-contained file, ready to be published on GitHub Pages and easy to customize with your own illustrations, diagrams, and logo assets.
+          </p>
+          <div class="cta-row">
+            <a class="button primary" href="#gallery">See the visuals</a>
+            <a class="button secondary" href="#brand">Use the logo kit</a>
+          </div>
+          <div class="stats">
+            <div class="stat">
+              <strong>1 file</strong>
+              <span>Single-page static site that works well for a GitHub Pages repository.</span>
+            </div>
+            <div class="stat">
+              <strong>3 visual styles</strong>
+              <span>Hero concept art, technical wireframe, and logo-focused branding section.</span>
+            </div>
+            <div class="stat">
+              <strong>Easy to tweak</strong>
+              <span>Replace text, colors, and image placeholders without rebuilding the structure.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <div class="reactor-visual">
+            <div class="glow"></div>
+            <div class="engine" aria-label="Stylized concept cutaway illustration">
+              <div class="intake"><div class="fan"></div></div>
+              <div class="shaft"></div>
+              <div class="core"></div>
+              <div class="turbine-stage"></div>
+              <div class="pipes">
+                <div class="pipe one"></div>
+                <div class="pipe two"></div>
+              </div>
+              <div class="rods"><span></span><span></span><span></span></div>
+              <div class="flame"></div>
+            </div>
+            <div class="callout a">Annular core ring<small>hero visual placeholder</small></div>
+            <div class="callout b">Control architecture<small>brand-style annotation</small></div>
+            <div class="callout c">Turbine integration<small>fictional showcase</small></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="concept">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Concept framing</h2>
+          </div>
+          <p>
+            This page presents the idea as a speculative design study rather than an engineering blueprint. The tone is intentionally dramatic, sleek, and a little excessive — exactly what a project named <span class="mono">Americanus Rex</span> deserves.
+          </p>
+        </div>
+
+        <div class="grid-3">
+          <article class="feature-card">
+            <div class="feature-icon">⚙️</div>
+            <h3>Integrated machine aesthetic</h3>
+            <p>
+              The visual identity leans into turbines, metallic housings, cutaway views, glowing core motifs, and premium aerospace-style geometry.
+            </p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-icon">📐</div>
+            <h3>Technical without overexplaining</h3>
+            <p>
+              Enough pseudo-technical language to feel credible on a landing page, while staying focused on atmosphere, branding, and diagrams.
+            </p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-icon">🦖</div>
+            <h3>Big identity, memorable name</h3>
+            <p>
+              The brand plays on scale, power, confidence, and theatrical American industrial mythology — half reactor, half apex predator.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="gallery">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Visual gallery</h2>
+          </div>
+          <p>
+            The blocks below are designed to host your generated illustrations. For now, the page includes built-in vector placeholders so the site already looks polished before you swap in final images.
+          </p>
+        </div>
+
+        <div class="gallery-grid">
+          <article class="gallery-card">
+            <h3>Hero cutaway render</h3>
+            <p style="margin-bottom:16px;">Main flagship visual for the top of the page or repository README.</p>
+            <div class="art-frame">
+              <svg class="cutaway-svg" viewBox="0 0 800 420" role="img" aria-label="Stylized cutaway render">
+                <defs>
+                  <linearGradient id="metal" x1="0" x2="1">
+                    <stop offset="0%" stop-color="#c8d5e8" />
+                    <stop offset="38%" stop-color="#6d7f9c" />
+                    <stop offset="100%" stop-color="#263446" />
+                  </linearGradient>
+                  <linearGradient id="coreGlow" x1="0" x2="1">
+                    <stop offset="0%" stop-color="#ffdf8c" />
+                    <stop offset="60%" stop-color="#ff7f3f" />
+                    <stop offset="100%" stop-color="#c22d11" />
+                  </linearGradient>
+                </defs>
+                <rect x="120" y="122" width="520" height="170" rx="85" fill="url(#metal)" opacity="0.96" />
+                <circle cx="183" cy="207" r="78" fill="#15202f" stroke="#95a8c5" stroke-width="12" />
+                <circle cx="183" cy="207" r="54" fill="none" stroke="#c8d5e8" stroke-width="20" stroke-dasharray="6 12" opacity="0.75" />
+                <rect x="310" y="164" width="150" height="86" rx="43" fill="url(#coreGlow)" />
+                <rect x="250" y="194" width="360" height="26" rx="13" fill="#617593" opacity="0.82" />
+                <rect x="515" y="146" width="92" height="122" rx="18" fill="#495a72" />
+                <path d="M587 155 C650 136, 704 160, 718 207 C704 252, 650 278, 587 259 Z" fill="url(#coreGlow)" opacity="0.9" />
+                <path d="M260 285 C310 340, 410 340, 478 292" fill="none" stroke="#6aaefe" stroke-width="12" stroke-linecap="round" />
+                <path d="M510 130 C566 84, 648 88, 692 124" fill="none" stroke="#6aaefe" stroke-width="12" stroke-linecap="round" />
+                <rect x="356" y="90" width="10" height="105" rx="5" fill="#d9e4f6" />
+                <rect x="382" y="76" width="10" height="119" rx="5" fill="#d9e4f6" />
+                <rect x="408" y="85" width="10" height="110" rx="5" fill="#d9e4f6" />
+                <text x="122" y="72" fill="#eaf1ff" font-size="26" font-family="Inter, Arial, sans-serif" font-weight="700">Concept cutaway</text>
+                <text x="122" y="97" fill="#aebddd" font-size="16" font-family="Inter, Arial, sans-serif">Replace with your own generated 3D image later</text>
+              </svg>
+              <span class="art-label">3D concept render</span>
+            </div>
+          </article>
+
+          <div class="gallery-stack">
+            <article class="gallery-card">
+              <h3>Technical drawing block</h3>
+              <p style="margin-bottom:16px;">For line art, labels, arrows, or a retro patent-board aesthetic.</p>
+              <div class="art-frame">
+                <svg class="wireframe-svg" viewBox="0 0 600 360" role="img" aria-label="Technical line drawing placeholder">
+                  <g fill="none" stroke="#dce8ff" stroke-width="2.2" opacity="0.95">
+                    <rect x="88" y="128" width="324" height="104" rx="50" />
+                    <circle cx="130" cy="180" r="46" />
+                    <rect x="218" y="149" width="92" height="62" rx="31" />
+                    <rect x="338" y="138" width="58" height="84" rx="14" />
+                    <path d="M396 146 L462 165 L492 180 L462 196 L396 214" />
+                    <path d="M198 240 C250 288, 324 286, 376 236" stroke="#77a7ff" stroke-width="4" />
+                    <path d="M286 95 L286 149 M264 102 L264 149 M308 112 L308 149" />
+                    <path d="M70 58 H520" opacity="0.4" />
+                    <path d="M70 300 H520" opacity="0.4" />
+                    <path d="M70 58 V300" opacity="0.4" />
+                    <path d="M520 58 V300" opacity="0.4" />
+                  </g>
+                  <g fill="#b7c7e5" font-family="Inter, Arial, sans-serif">
+                    <text x="94" y="86" font-size="18" font-weight="700">System diagram</text>
+                    <text x="94" y="108" font-size="13">Annotated wireframe placeholder for technical artwork</text>
+                    <text x="438" y="142" font-size="12">flow path</text>
+                    <text x="210" y="257" font-size="12">coolant loop</text>
+                    <text x="250" y="135" font-size="12">annular core</text>
+                  </g>
+                </svg>
+                <span class="art-label">Technical drawing</span>
+              </div>
+            </article>
+
+            <article class="gallery-card">
+              <h3>Repository-ready media note</h3>
+              <p>
+                Once you export your generated illustrations, place them in an <span class="mono">assets/</span> folder and replace these SVG placeholders with regular <span class="mono">&lt;img&gt;</span> tags. GitHub Pages will serve them automatically.
+              </p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="specs">
+      <div class="container spec-grid">
+        <article class="spec-card">
+          <h3>Positioning</h3>
+          <p>
+            This site sells mood, identity, and visual coherence. It is not trying to read like a standards dossier or an actual reactor specification sheet.
+          </p>
+          <div class="quote">
+            “Part aerospace prototype, part atomic legend, part impossible machine — Americanus Rex exists to look magnificent on a screen.”
+          </div>
+        </article>
+
+        <article class="spec-card">
+          <h3>Suggested concept language</h3>
+          <div class="spec-list">
+            <div class="spec-row">
+              <strong>Architecture</strong>
+              <span>Integrated annular-core turbine concept with a dramatic single-body cutaway presentation.</span>
+            </div>
+            <div class="spec-row">
+              <strong>Visual tone</strong>
+              <span>High-pressure, high-energy, retro-futurist, aerospace-industrial, cinematic metallic finish.</span>
+            </div>
+            <div class="spec-row">
+              <strong>Graphic cues</strong>
+              <span>Glow core, looped piping, rod clusters, rotating stage rings, blueprint overlays, imperial branding.</span>
+            </div>
+            <div class="spec-row">
+              <strong>Website role</strong>
+              <span>Landing page, teaser page, project joke site, stylized mock-company page, or speculative design portfolio piece.</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="brand">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Brand and logo zone</h2>
+          </div>
+          <p>
+            The page includes a built-in vector logo placeholder that already feels presentable. You can replace it later with your generated dinosaur mark, wordmark, or badge.
+          </p>
+        </div>
+
+        <div class="logo-layout">
+          <article class="logo-card">
+            <h3>Badge preview</h3>
+            <p style="margin-bottom:16px;">Hero-style emblem suitable for the page header, favicon inspiration, or social preview image.</p>
+            <div class="art-frame" style="aspect-ratio: 1 / 1;">
+              <svg class="logo-svg" viewBox="0 0 420 420" role="img" aria-label="Americanus Rex logo placeholder">
+                <defs>
+                  <linearGradient id="flagGrad" x1="0" x2="1">
+                    <stop offset="0%" stop-color="#76a7ff" />
+                    <stop offset="100%" stop-color="#ff7b47" />
+                  </linearGradient>
+                </defs>
+                <circle cx="210" cy="210" r="150" fill="none" stroke="#6e88a8" stroke-width="6" opacity="0.7" />
+                <circle cx="210" cy="210" r="126" fill="rgba(7,17,31,0.65)" stroke="rgba(255,255,255,0.08)" stroke-width="2" />
+                <path d="M136 262 C124 212, 138 156, 180 128 C234 92, 306 112, 326 174 C339 214, 322 254, 278 276 C240 294, 198 295, 166 284" fill="url(#flagGrad)" opacity="0.96" />
+                <path d="M177 132 C216 145, 253 163, 303 173" stroke="#ecf2ff" stroke-width="8" opacity="0.58" />
+                <path d="M169 172 C214 184, 260 204, 313 214" stroke="#ecf2ff" stroke-width="8" opacity="0.52" />
+                <path d="M165 214 C214 226, 248 246, 296 262" stroke="#ecf2ff" stroke-width="8" opacity="0.48" />
+                <circle cx="276" cy="170" r="8" fill="#0b1019" />
+                <path d="M242 212 L315 214 L274 247 Z" fill="#0b1019" />
+                <path d="M241 213 L305 230" stroke="#f3f7ff" stroke-width="3" opacity="0.5" />
+                <rect x="68" y="294" width="284" height="56" rx="18" fill="#142337" stroke="#6f88aa" stroke-width="3" />
+                <text x="210" y="330" fill="#f2f7ff" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="800" text-anchor="middle" letter-spacing="2">AMERICANUS REX</text>
+              </svg>
+              <span class="art-label">Logo placeholder</span>
+            </div>
+          </article>
+
+          <article class="panel">
+            <h3 style="margin-top:0; margin-bottom:10px; font-size:1.12rem;">How to publish on GitHub Pages</h3>
+            <p>
+              Create a repository, place this file at the root as <span class="mono">index.html</span>, then enable GitHub Pages in the repository settings. If you want a cleaner project, add an <span class="mono">assets/</span> folder for images and keep this page as the public entry point.
+            </p>
+            <div class="spec-list" style="margin-top:18px;">
+              <div class="spec-row">
+                <strong>File name</strong>
+                <span><span class="mono">index.html</span> at repository root.</span>
+              </div>
+              <div class="spec-row">
+                <strong>Images</strong>
+                <span>Store generated renders in <span class="mono">assets/</span> and point to them with relative paths.</span>
+              </div>
+              <div class="spec-row">
+                <strong>Custom domain</strong>
+                <span>Add later if desired; the page already works fine without JavaScript build tooling.</span>
+              </div>
+              <div class="spec-row">
+                <strong>Next upgrade</strong>
+                <span>Add your actual generated logo, cutaway art, and maybe a fake specification PDF download button.</span>
+              </div>
+            </div>
+            <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
+              <span class="badge">Static HTML</span>
+              <span class="badge">GitHub Pages friendly</span>
+              <span class="badge">No framework required</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-panel">
+        <div>
+          <strong style="display:block; margin-bottom:6px; font-size:1.05rem;">Americanus Rex</strong>
+          <p class="footer-note">Speculative design landing page built as a single-file website for easy GitHub Pages publishing.</p>
+        </div>
+        <div class="footer-note">Edit text · swap visuals · publish</div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
